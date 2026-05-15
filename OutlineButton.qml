@@ -11,11 +11,11 @@ Row {
 
     height: 36
 
-    StyledRect {
+    Rectangle {
         radius: Theme.cornerRadius
         color: "transparent"
-        borderColor: parent.borderColor
-        borderWidth: 1
+        border.color: borderColor
+        border.width: 1
         width: rowContent.width + Theme.spacingM * 2
         height: parent.height
 
