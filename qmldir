@@ -1,0 +1,17 @@
+module dms.common
+ActionTile 1.0 ActionTile.qml
+CopyBox 1.0 CopyBox.qml
+HintItem 1.0 HintItem.qml
+HintSection 1.0 HintSection.qml
+InfoText 1.0 InfoText.qml
+InfoTile 1.0 InfoTile.qml
+MediaHeader 1.0 MediaHeader.qml
+PluginHeader 1.0 PluginHeader.qml
+PopoutContent 1.0 PopoutContent.qml
+SectionTitle 1.0 SectionTitle.qml
+SettingsCard 1.0 SettingsCard.qml
+StatusDisplay 1.0 StatusDisplay.qml
+TagChip 1.0 TagChip.qml
+UsageGuide 1.0 UsageGuide.qml
+WatermarkText 1.0 WatermarkText.qml
+OutlineButton 1.0 OutlineButton.qml

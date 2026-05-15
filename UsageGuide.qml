@@ -15,6 +15,7 @@ Column {
             spacing: Theme.spacingS
             
             StyledText {
+                id: bullet
                 text: "•"
                 color: Theme.primary
                 font.pixelSize: Theme.fontSizeSmall
@@ -25,7 +26,7 @@ Column {
 
             StyledText {
                 id: textContent
-                width: root.width - parent.spacing - 20
+                width: root.width - (bullet.width + parent.spacing + (Theme.spacingS * 2))
                 text: modelData.replace(/\n/g, "<br/>")
                 color: Theme.surfaceVariantText
                 font.pixelSize: Theme.fontSizeSmall
