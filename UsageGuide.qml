@@ -25,8 +25,8 @@ Column {
 
             StyledText {
                 id: textContent
-                width: parent.width - parent.spacing - 15
-                text: modelData
+                width: root.width - parent.spacing - 20
+                text: modelData.replace(/\n/g, "<br/>")
                 color: Theme.surfaceVariantText
                 font.pixelSize: Theme.fontSizeSmall
                 wrapMode: Text.WordWrap
