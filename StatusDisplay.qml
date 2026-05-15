@@ -11,7 +11,7 @@ Rectangle {
     property string infoText: ""
     property bool active: false
     property real progress: -1 // -1 means hidden
-    property bool compact: false
+    property bool compact: true
     
     width: parent.width
     height: compact ? 50 : 110
