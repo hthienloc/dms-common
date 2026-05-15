@@ -30,12 +30,14 @@ Rectangle {
             size: root.large ? 72 : (root.compact ? 24 : 56)
             color: root.active ? Theme.onPrimary : Theme.surfaceVariantText
             anchors.verticalCenter: parent.verticalCenter
+            visible: root.iconName !== ""
         }
 
         Column {
             width: 160
             spacing: 2
             anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: root.iconName === "" ? parent.horizontalCenter : undefined
 
             StyledText {
                 text: root.title
