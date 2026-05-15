@@ -11,6 +11,8 @@ Rectangle {
     property bool active: false
     property color activeColor: Theme.primary
     property color onActiveColor: Theme.onPrimary
+    property color borderColor: "transparent"
+    property real borderWidth: 0
     
     signal clicked()
     signal pressAndHold()
@@ -19,6 +21,8 @@ Rectangle {
     
     radius: Theme.cornerRadius
     color: active ? activeColor : Theme.surfaceContainerHigh
+    border.color: borderColor
+    border.width: borderWidth
     
     Behavior on color { ColorAnimation { duration: 200 } }
 
