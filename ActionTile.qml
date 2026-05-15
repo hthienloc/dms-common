@@ -14,6 +14,7 @@ Rectangle {
     property color borderColor: "transparent"
     property real borderWidth: 0
     property color textColor: Theme.surfaceText
+    property int titleFontSize: 14
     
     signal clicked()
     signal pressAndHold()
@@ -40,7 +41,7 @@ Rectangle {
         
         StyledText {
             text: root.title
-            font.pixelSize: 14
+            font.pixelSize: root.titleFontSize
             font.weight: Font.Medium
             color: root.active ? root.onActiveColor : root.textColor
             anchors.horizontalCenter: parent.horizontalCenter
