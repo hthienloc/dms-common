@@ -12,9 +12,10 @@ Rectangle {
     property bool active: false
     property real progress: -1 // -1 means hidden
     property bool compact: true
+    property bool large: false
     
     width: parent.width
-    height: compact ? 50 : 110
+    height: large ? 150 : (compact ? 50 : 110)
     radius: Theme.cornerRadius
     color: active ? Theme.primary : Theme.surfaceContainerHigh
     
@@ -22,11 +23,11 @@ Rectangle {
 
     Row {
         anchors.centerIn: parent
-        spacing: root.compact ? 8 : 32
+        spacing: root.compact ? 8 : (root.large ? 48 : 32)
 
         DankIcon {
             name: root.iconName
-            size: root.compact ? 24 : 56
+            size: root.large ? 72 : (root.compact ? 24 : 56)
             color: root.active ? Theme.onPrimary : Theme.surfaceVariantText
             anchors.verticalCenter: parent.verticalCenter
         }
@@ -38,7 +39,7 @@ Rectangle {
 
             StyledText {
                 text: root.title
-                font.pixelSize: root.compact ? 12 : 14
+                font.pixelSize: root.large ? 18 : (root.compact ? 12 : 14)
                 font.weight: Font.Bold
                 opacity: 0.8
                 color: root.active ? Theme.onPrimary : Theme.surfaceText
@@ -47,8 +48,8 @@ Rectangle {
 
             StyledText {
                 text: root.subtitle
-                visible: !root.compact
-                font.pixelSize: 32
+                visible: !root.compact || root.large
+                font.pixelSize: root.large ? 48 : 32
                 font.weight: Font.Bold
                 color: root.active ? Theme.onPrimary : Theme.surfaceText
                 anchors.horizontalCenter: parent.horizontalCenter
