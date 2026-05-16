@@ -69,3 +69,11 @@ If you create a reusable UI pattern that could benefit other plugins, feel free 
 
 ## License
 GPL-3.0
+
+## Roadmap / TODO
+
+- [ ] **Animation Wrappers**: Standardized QML components for consistent transitions (Fade, Slide, Scale).
+- [ ] **IPC Utility Suite**: More robust and type-safe wrappers for common `DMSService` calls.
+- [ ] **Adaptive Layouts**: Helpers for building responsive UI that works across different bar positions and widths.
+- [ ] **State Persistence Helpers**: Standardized methods for caching and syncing UI state between widget instances.
+- [ ] **Expanded Component Kit**: Richer widgets like TabBars, ProgressBars, and unified ScrollView wrappers.
