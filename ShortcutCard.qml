@@ -20,45 +20,45 @@ Rectangle {
     border.color: mouseArea.containsMouse ? activeColor : "transparent"
     border.width: 1
 
-    Row {
-        anchors.fill: parent
+    DankIcon {
+        name: root.iconName
+        size: Theme.iconSize
+        color: Theme.surfaceText
+        anchors.left: parent.left
         anchors.leftMargin: Theme.spacingL
-        anchors.rightMargin: Theme.spacingL
-        spacing: Theme.spacingL
+        anchors.verticalCenter: parent.verticalCenter
+    }
 
-        DankIcon {
-            name: root.iconName
-            size: Theme.iconSize
-            color: Theme.surfaceText
-            anchors.verticalCenter: parent.verticalCenter
-        }
+    StyledText {
+        text: root.label
+        font.pixelSize: Theme.fontSizeMedium
+        font.weight: Font.Medium
+        color: Theme.surfaceText
+        anchors.left: parent.left
+        anchors.leftMargin: Theme.spacingL * 2 + Theme.iconSize
+        anchors.right: shortcutBadge.left
+        anchors.rightMargin: Theme.spacingL
+        anchors.verticalCenter: parent.verticalCenter
+    }
+
+    Rectangle {
+        id: shortcutBadge
+        visible: root.shortcut !== ""
+        width: shortcutLabel.implicitWidth + Theme.spacingM * 2
+        height: shortcutLabel.implicitHeight + Theme.spacingS
+        radius: Theme.cornerRadius / 2
+        color: Theme.withAlpha(Theme.surfaceVariant, 0.5)
+        anchors.right: parent.right
+        anchors.rightMargin: Theme.spacingL
+        anchors.verticalCenter: parent.verticalCenter
 
         StyledText {
-            text: root.label
-            font.pixelSize: Theme.fontSizeMedium
-            font.weight: Font.Medium
+            id: shortcutLabel
+            text: root.shortcut
+            font.pixelSize: Theme.fontSizeSmall
             color: Theme.surfaceText
-            anchors.verticalCenter: parent.verticalCenter
-        }
-
-        Item { Layout.fillWidth: true }
-
-        Rectangle {
-            visible: root.shortcut !== ""
-            width: shortcutLabel.implicitWidth + Theme.spacingM * 2
-            height: shortcutLabel.implicitHeight + Theme.spacingS
-            radius: Theme.cornerRadius / 2
-            color: Theme.withAlpha(Theme.surfaceVariant, 0.5)
-            anchors.verticalCenter: parent.verticalCenter
-
-            StyledText {
-                id: shortcutLabel
-                text: root.shortcut
-                font.pixelSize: Theme.fontSizeSmall
-                color: Theme.surfaceText
-                opacity: 0.6
-                anchors.centerIn: parent
-            }
+            opacity: 0.6
+            anchors.centerIn: parent
         }
     }
 
