@@ -9,6 +9,7 @@ Rectangle {
     property string label: ""
     property string shortcut: ""
     property color activeColor: Theme.primary
+    property bool disabled: false
 
     signal clicked()
 
@@ -16,9 +17,10 @@ Rectangle {
     width: parent.width
     height: 52
 
-    color: mouseArea.containsMouse ? Theme.withAlpha(activeColor, 0.12) : Theme.withAlpha(Theme.surfaceVariant, 0.08)
-    border.color: mouseArea.containsMouse ? activeColor : "transparent"
+    color: root.disabled ? Theme.withAlpha(Theme.surfaceVariant, 0.04) : (mouseArea.containsMouse ? Theme.withAlpha(activeColor, 0.12) : Theme.withAlpha(Theme.surfaceVariant, 0.08))
+    border.color: root.disabled ? "transparent" : (mouseArea.containsMouse ? activeColor : "transparent")
     border.width: 1
+    opacity: root.disabled ? 0.4 : 1.0
 
     DankIcon {
         name: root.iconName
@@ -65,8 +67,9 @@ Rectangle {
     MouseArea {
         id: mouseArea
         anchors.fill: parent
-        hoverEnabled: true
-        cursorShape: Qt.PointingHandCursor
+        hoverEnabled: !root.disabled
+        enabled: !root.disabled
+        cursorShape: root.disabled ? Qt.ArrowCursor : Qt.PointingHandCursor
         onClicked: root.clicked()
     }
 }
