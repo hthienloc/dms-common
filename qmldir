@@ -19,3 +19,5 @@ StatusDot 1.0 StatusDot.qml
 TagChip 1.0 TagChip.qml
 UsageGuide 1.0 UsageGuide.qml
 WatermarkText 1.0 WatermarkText.qml
+LocalI18n 1.0 LocalI18n.qml
+
