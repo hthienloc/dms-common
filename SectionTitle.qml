@@ -22,7 +22,7 @@ Row {
         id: titleText
         font.pixelSize: Theme.fontSizeLarge
         font.weight: Font.Bold
-        color: Theme.primary
+        color: Theme.surfaceText
         anchors.verticalCenter: parent.verticalCenter
         width: root.width - (root.icon !== "" ? parent.spacing + 18 : 0)
         elide: Text.ElideRight
