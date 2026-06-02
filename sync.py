@@ -105,6 +105,12 @@ def main():
                         print("  Remote push: SUCCESS")
                 else:
                     print("  No changes to commit (working tree clean)")
+                    if should_push:
+                        # Check if branch is ahead and needs to be pushed
+                        branch_info = subprocess.run(["git", "-C", plugin_dir, "status", "-b", "--porcelain"], capture_output=True, text=True, check=True)
+                        if "ahead" in branch_info.stdout:
+                            subprocess.run(["git", "-C", plugin_dir, "push"], check=True)
+                            print("  Remote push: SUCCESS (pushed existing commits)")
         except subprocess.CalledProcessError as e:
             print(f"  Git operation failed: {e}")
             
