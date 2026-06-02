@@ -1,17 +1,28 @@
 #!/usr/bin/env python3
+import argparse
 import os
 import shutil
 import subprocess
 import sys
 
 def main():
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(description="Synchronize dms-common components across plugins.")
+    parser.add_argument("--push", "-p", action="store_true", help="Push committed changes to remote repository")
+    args = parser.parse_args()
+    should_push = args.push
+
     # Central dms-common directory (the directory containing this script)
     src_dir = os.path.dirname(os.path.abspath(__file__))
     parent_dir = os.path.dirname(src_dir)
     
     print("Starting synchronization of dms-common components...")
     print(f"Source: {src_dir}")
-    print(f"Parent directory: {parent_dir}\n")
+    print(f"Parent directory: {parent_dir}")
+    if should_push:
+        print("Push option is ENABLED. Commits will be pushed to remote repositories.\n")
+    else:
+        print("Push option is DISABLED. Changes will only be committed locally.\n")
 
     # List of files/directories to ignore during sync
     ignore_list = {".git", "sync.py", "sync.sh", "__pycache__"}
@@ -89,14 +100,34 @@ def main():
                     subprocess.run(["git", "-C", plugin_dir, "add", "dms-common/"], check=True)
                     subprocess.run(["git", "-C", plugin_dir, "commit", "-m", "feat(common): sync dms-common components to latest version"], check=True)
                     print("  Local commit: CREATED")
+                    if should_push:
+                        subprocess.run(["git", "-C", plugin_dir, "push"], check=True)
+                        print("  Remote push: SUCCESS")
                 else:
                     print("  No changes to commit (working tree clean)")
         except subprocess.CalledProcessError as e:
-            print(f"  Git commit failed: {e} (might be due to merge conflict in other files)")
+            print(f"  Git operation failed: {e}")
             
         synced_count += 1
 
     print(f"\nDone! Successfully synchronized {synced_count} plugins ({failed_count} failures/warnings).")
+
+    # 5. Push dms-common itself if requested
+    if should_push:
+        print("\n--- Pushing dms-common itself ---")
+        try:
+            if os.path.exists(os.path.join(src_dir, ".git")):
+                # Check if there are unpushed commits
+                branch_info = subprocess.run(["git", "-C", src_dir, "status", "-b", "--porcelain"], capture_output=True, text=True, check=True)
+                if "ahead" in branch_info.stdout:
+                    subprocess.run(["git", "-C", src_dir, "push"], check=True)
+                    print("  dms-common remote push: SUCCESS")
+                else:
+                    print("  dms-common is already up to date with remote")
+            else:
+                print("  dms-common is not a git repository, skipping push")
+        except subprocess.CalledProcessError as e:
+            print(f"  Failed to push dms-common: {e}")
 
 if __name__ == "__main__":
     main()
