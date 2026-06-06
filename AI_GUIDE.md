@@ -97,4 +97,41 @@ Rectangle {
     border.width: 1
     radius: Theme.cornerRadius
 }
+
+---
+
+## 5. Development & Validation Workflow
+
+To ensure high-quality code and minimize runtime errors, AI agents **must** follow this strict validation and debugging process before delivering changes.
+
+### A. Proactive Syntax Validation
+Before finalizing any QML file, always run `qmllint` to catch basic syntax errors like missing braces `}`, semicolons, or invalid property assignments.
+
+```bash
+# General usage
+qmllint YourFile.qml
+
+# If running on Fedora/DMS environment with Qt6
+/usr/lib64/qt6/bin/qmllint YourFile.qml
+```
+*Note: Ignore warnings about missing module imports (like `qs.*`) if `qmllint` is running outside the DMS runtime environment, but **never** ignore "syntax" or "Expected token" errors.*
+
+### B. IPC Integration Checklist
+When adding IPC commands (`IpcHandler`), verify the following:
+1. **Manifest Capability**: Ensure `"ipc"` is added to the `capabilities` array in `plugin.json`.
+2. **Permissions**: If the plugin executes shell commands or uses specialized services, ensure corresponding permissions (e.g., `"process"`) are in `plugin.json`.
+3. **Placement**: Place the `IpcHandler` block near the top of the root component for reliable parsing.
+4. **Scoping**: Use qualified lookups (e.g., `root.property`) inside `IpcHandler` functions if `pragma ComponentBehavior: Bound` is enabled.
+
+### C. Troubleshooting "Component Fails to Load"
+If a plugin loads but its Settings or Popout fails to open:
+1. **Check for missing components**: Ensure all custom components used (e.g., `SettingsDivider`) exist in the plugin's `dms-common` directory.
+2. **Update qmldir**: Any new `.qml` file added to `dms-common` **must** be declared in its `qmldir` file.
+3. **Inspect Runtime Logs**: Use `journalctl -u dms --since "2 minutes ago"` to identify specific QML type resolution or runtime errors.
+
+### D. Syncing to System
+Always use the established sync script to test changes in the live environment:
+```bash
+./sync_to_runtime.sh
+```
 ```
