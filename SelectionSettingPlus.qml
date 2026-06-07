@@ -11,6 +11,7 @@ Item {
     required property var options
     property string defaultValue: ""
     property string value: defaultValue
+    property bool isInitialized: false
 
     width: parent.width
     implicitHeight: layoutColumn.implicitHeight
