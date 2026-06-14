@@ -177,11 +177,16 @@ In DMS 1.5.0, the plugin manifest schema has changed to natively support multipl
     "ipc"
   ],
   "components": {
-    "daemon": "./FloatyPlugin.qml",
-    "widget": "./FloatyPlugin.qml"
+    "daemon": "./FloatyDaemon.qml",
+    "widget": "./FloatyWidget.qml"
   },
   "settings": "./FloatySettings.qml",
   "requires_dms": ">=1.5.0"
 }
 ```
-```
+
+---
+
+## 7. Standardized Plugin Documentation
+Every new plugin should include a standardized README file to clearly document its installation, controls, capabilities, and IPC commands. Refer to [README_TEMPLATE.md](file:///home/loccun/Documents/GitHub/dms-common/README_TEMPLATE.md) for the official template layout.
+
