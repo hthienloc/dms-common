@@ -134,4 +134,54 @@ Always use the established sync script to test changes in the live environment:
 ```bash
 ./sync_to_runtime.sh
 ```
+
+---
+
+## 6. DMS 1.5+ Plugin Migration (Composite API)
+
+In DMS 1.5.0, the plugin manifest schema has changed to natively support multiple surfaces (e.g., running a background service while simultaneously offering a panel widget).
+
+### A. The Change
+- **Legacy Format:** Used `component` (string) and classified the plugin's role under `type` (e.g., `daemon`, `widget`, `launcher`, `desktop`).
+- **New Format:** Uses `type: "composite"` and a `components` object mapping specific surfaces (`daemon`, `widget`, `launcher`, `desktop`) to their QML components.
+
+> [!WARNING]
+> If a plugin is marked as `"type": "daemon"` with legacy `"capabilities": ["dankbar-widget"]`, the shell's legacy classifier only indexes it as a daemon, making it **unsearchable** in the settings widget list. You must migrate it to the composite format.
+
+### B. Migration Example
+
+#### Before (Legacy `plugin.json`):
+```json
+{
+  "id": "floaty",
+  "name": "Floaty",
+  "type": "daemon",
+  "capabilities": [
+    "dankbar-widget",
+    "ipc"
+  ],
+  "component": "./FloatyPlugin.qml",
+  "settings": "./FloatySettings.qml"
+}
+```
+
+#### After (DMS 1.5+ `plugin.json`):
+```json
+{
+  "id": "floaty",
+  "name": "Floaty",
+  "type": "composite",
+  "capabilities": [
+    "daemon",
+    "dankbar-widget",
+    "ipc"
+  ],
+  "components": {
+    "daemon": "./FloatyPlugin.qml",
+    "widget": "./FloatyPlugin.qml"
+  },
+  "settings": "./FloatySettings.qml",
+  "requires_dms": ">=1.5.0"
+}
+```
 ```
