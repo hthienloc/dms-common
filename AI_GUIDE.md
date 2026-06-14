@@ -190,3 +190,12 @@ In DMS 1.5.0, the plugin manifest schema has changed to natively support multipl
 ## 7. Standardized Plugin Documentation
 Every new plugin should include a standardized README file to clearly document its installation, controls, capabilities, and IPC commands. Refer to [README_TEMPLATE.md](file:///home/loccun/Documents/GitHub/dms-common/README_TEMPLATE.md) for the official template layout.
 
+---
+
+## 8. Native DMS Services vs External Dependencies
+To ensure portability and consistent user notifications, dynamic styling, and configuration:
+- **Prioritize Native APIs:** Always prioritize DMS's built-in clipboard and screenshot mechanisms before falling back to external command-line tools.
+- **Clipboard:** DMS provides native clipboard handling for text and image formats. Avoid spawning processes like `wl-paste`, `wl-copy`, `xclip`, or `xsel` directly unless handling unsupported mime-types.
+- **Screenshots:** Use the native shell screenshot triggers (e.g. `dms screenshot region` or `dms screenshot full`) instead of raw system tools like `grim` or `slurp`. This allows the shell to manage overlays, focus grabbing, and screenshot notifications natively.
+
+
