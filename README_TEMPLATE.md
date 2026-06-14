@@ -4,6 +4,10 @@
 
 <img src="screenshot.png" width="400" alt="Plugin Screenshot">
 
+## Requirements
+* **System packages**: `[package-name]` (e.g. `poppler-utils` for pdf rendering)
+* **DMS version**: `[version]`
+
 ## Installation
 
 ### Via DMS CLI
@@ -69,10 +73,6 @@ Describe any settings customizable via the DMS settings panel or directly in `se
 
 * **Property Name** (`type`): [Default Value] - [Description]
 
-## Requirements
-* **System packages**: `[package-name]` (e.g. `poppler-utils` for pdf rendering)
-* **DMS version**: `[version]`
-
 ## Development
 
 1. Sync local changes to the live DMS environment:
@@ -84,5 +84,10 @@ Describe any settings customizable via the DMS settings panel or directly in `se
    qmllint [Filename].qml
    ```
 
+## Roadmap / TODO
+
+- [ ] Future feature placeholder
+
 ## License
 [License Type, e.g., GPL-3.0 / MIT]
+
