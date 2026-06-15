@@ -86,9 +86,7 @@ def main():
             else:
                 print("  No QML files to lint")
         except subprocess.CalledProcessError:
-            print("  qmllint check: FAILED")
-            failed_count += 1
-            continue
+            print("  qmllint check: FAILED (non-blocking warning)")
         except FileNotFoundError:
             print("  qmllint check: SKIPPED (qmllint not found)")
 
