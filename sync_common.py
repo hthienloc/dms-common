@@ -86,11 +86,30 @@ def main():
         shutil.copy2(src_file, dst_file)
         qmldir_lines.append(f"{comp} 1.0 {src_file.name}")
         
-    # Xử lý thư mục assets (copy toàn bộ nếu có)
+    # Xử lý thư mục assets (chỉ copy các file được tham chiếu)
     src_assets = DMS_COMMON_REPO / "assets"
     if src_assets.exists() and src_assets.is_dir():
         dst_assets = target_common / "assets"
-        shutil.copytree(src_assets, dst_assets)
+        
+        # Quét tất cả file QML để tìm tham chiếu dạng "assets/filename"
+        referenced_assets = set()
+        all_scan_files = plugin_qml_files + [available_components[comp] for comp in used_components]
+        for f in all_scan_files:
+            try:
+                content = f.read_text(encoding="utf-8")
+                # regex tìm các file trong assets/
+                for match in re.findall(r'assets/([a-zA-Z0-9_\-\.\/]+)', content):
+                    referenced_assets.add(match.strip())
+            except Exception:
+                pass
+                
+        if referenced_assets:
+            for asset_rel_path in referenced_assets:
+                asset_src = src_assets / asset_rel_path
+                if asset_src.exists() and asset_src.is_file():
+                    asset_dst = dst_assets / asset_rel_path
+                    asset_dst.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(asset_src, asset_dst)
         
     # Ghi qmldir
     qmldir_path = target_common / "qmldir"
