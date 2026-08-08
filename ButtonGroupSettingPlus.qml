@@ -21,6 +21,8 @@ Item {
 
     readonly property bool isDirty: String(value) !== String(defaultValue)
 
+    property bool isInitialized: false
+
     function resetToDefault() {
         console.log(`[ButtonGroupSettingPlus] Resetting ${settingKey}`);
         value = defaultValue;
@@ -30,10 +32,11 @@ Item {
         const settings = findSettings()
         if (settings && settings.pluginService) {
             value = settings.loadValue(settingKey, defaultValue)
+            isInitialized = true
         }
     }
 
-    Component.onCompleted: loadValue()
+    Component.onCompleted: Qt.callLater(loadValue)
 
     readonly property var optionLabels: {
         const labels = []
@@ -64,6 +67,7 @@ Item {
     }
 
     onValueChanged: {
+        if (!isInitialized) return
         const settings = findSettings()
         if (settings) settings.saveValue(settingKey, value)
     }
